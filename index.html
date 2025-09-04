@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квиз по аренде экрана</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body class="bg-[#f5f5f5] min-h-screen flex items-center justify-center p-4">
+  <!-- Кнопка открытия квиза -->
+  <button id="openQuizBtn" class="bg-[rgb(252,144,67)] text-white text-lg font-medium rounded-full px-8 py-4 hover:bg-[rgb(228,132,63)] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+  Рассчитать стоимость онлайн
+  </button>
+
+  <!-- Модальное окно с квизом -->
+  <div id="quizModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 modal opacity-0 pointer-events-none">
+    <div class="bg-[#f9f9f9] rounded-xl max-w-[600px] w-full p-8 relative drop-shadow-md modal-content" style="font-family: Arial, sans-serif; max-height: 90vh; overflow-y: auto;">
+      <!-- Кнопка закрытия -->
+      <button id="closeQuizBtn" aria-label="Закрыть" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 focus:outline-none">
+        <i class="fas fa-times fa-lg"></i>
+      </button>
+
+      <!-- Шаг 1: Где планируете использовать экран? -->
+      <div class="quiz-step active" data-step="1">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Где планируете использовать экран?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="usage-location" value="indoors" required />
+                <span>В помещении</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="usage-location" value="outdoors" />
+                <span>На улице</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="usage-location" value="event" />
+                <span>На мероприятии</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="usage-location" value="other" />
+                <span>Другое</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="bg-gray-300 text-gray-700 text-sm font-normal rounded-full px-8 py-2.5 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 opacity-0 cursor-default">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 2: Размер экрана -->
+      <div class="quiz-step" data-step="2">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Какой размер экрана вам нужен?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-size" value="up-to-5" required />
+                <span>До 5 м²</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-size" value="5-10" />
+                <span>5–10 м²</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-size" value="10-20" />
+                <span>10–20 м²</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-size" value="more-20" />
+                <span>Более 20 м²</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-size" value="consultation" />
+                <span>Не знаю, нужна консультация</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 3: Форма экрана -->
+      <div class="quiz-step" data-step="3">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Какая нужна форма экрана?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-shape" value="straight" required />
+                <span>Прямой</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-shape" value="curved" />
+                <span>Изогнутый</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="screen-shape" value="unknown" />
+                <span>Не знаю</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 4: Нужен ли звук? -->
+      <div class="quiz-step" data-step="4">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Нужен ли звук?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="sound" value="yes" required />
+                <span>Да</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="sound" value="no" />
+                <span>Нет</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="sound" value="unknown" />
+                <span>Еще не знаю</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 5: Срок аренды -->
+      <div class="quiz-step" data-step="5">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              На какой срок нужен экран?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="rental-period" value="one-day" required />
+                <span>Один день</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="rental-period" value="few-days" />
+                <span>Несколько дней</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="rental-period" value="long-term" />
+                <span>Долгосрочно</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 6: Способ получения расчета -->
+      <div class="quiz-step" data-step="6">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Как удобно получить расчет?
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="contact-method" value="phone" required />
+                <span>По телефону + консультация</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="contact-method" value="whatsapp" />
+                <span>WhatsApp</span>
+              </label>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
+                <input type="radio" name="contact-method" value="telegram" />
+                <span>Telegram</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 7: Контактные данные -->
+      <div class="quiz-step" data-step="7">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Ответьте на несколько вопросов
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-1">
+            и мы рассчитаем стоимость аренды
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Вопрос -->
+        <form>
+          <fieldset class="mb-12">
+            <legend class="text-center text-base font-normal mb-6 text-black">
+              Укажите свои контактные данные
+            </legend>
+
+            <div class="flex flex-col space-y-4 max-w-xs mx-auto">
+              <div class="w-full">
+                <input type="text" name="name" placeholder="Имя" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]" required />
+              </div>
+              <div class="w-full">
+                <input type="tel" name="phone" placeholder="Телефон" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]" required />
+              </div>
+              <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer mt-4">
+                <input type="checkbox" name="privacy-policy" required />
+                <span>Я соглашаюсь на обработку персональных данных</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="flex justify-center space-x-6">
+            <button type="button" class="prev-btn bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-8 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+              <i class="fas fa-arrow-left mr-2"></i> Назад
+            </button>
+            <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
+              Отправить
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 8: Благодарность -->
+      <div class="quiz-step" data-step="8">
+        <div class="text-center mb-6">
+          <p class="text-base font-normal text-black leading-tight">
+            Спасибо за обращение
+          </p>
+          <p class="text-sm font-normal text-gray-600 mt-4">
+            Мы произведем расчет в ближайшее время
+          </p>
+        </div>
+
+        <!-- Индикаторы шагов -->
+        <div class="flex justify-center space-x-1 mb-10">
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">7</div>
+          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">8</div>
+        </div>
+
+        <!-- Иконка успеха -->
+        <div class="flex justify-center mb-12">
+          <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+            <i class="fas fa-check text-green-500 text-2xl"></i>
+          </div>
+        </div>
+
+        <!-- Кнопка закрытия -->
+        <div class="flex justify-center">
+          <button type="button" id="finishQuizBtn" class="bg-[#3b9cd6] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#3184c1] focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]">
+            Закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('quizModal');
+      const openBtn = document.getElementById('openQuizBtn');
+      const closeBtn = document.getElementById('closeQuizBtn');
+      const finishBtn = document.getElementById('finishQuizBtn');
+      const nextButtons = document.querySelectorAll('.next-btn');
+      const prevButtons = document.querySelectorAll('.prev-btn');
+      const steps = document.querySelectorAll('.quiz-step');
+      let currentStep = 1;
+      
+      // Открытие модального окна
+      openBtn.addEventListener('click', function() {
+        modal.classList.add('modal-open');
+        modal.classList.remove('opacity-0');
+        modal.classList.remove('pointer-events-none');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      // Закрытие модального окна
+      function closeModal() {
+        modal.classList.remove('modal-open');
+        modal.classList.add('opacity-0');
+        modal.classList.add('pointer-events-none');
+        document.body.style.overflow = 'auto';
+        
+        // Сброс квиза к первому шагу
+        showStep(1);
+        currentStep = 1;
+      }
+      
+      closeBtn.addEventListener('click', closeModal);
+      finishBtn.addEventListener('click', closeModal);
+      
+      // Закрытие по клику вне модального окна
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+      
+      // Функция показа шага
+      function showStep(stepNumber) {
+        steps.forEach(step => {
+          step.classList.remove('active');
+        });
+        
+        const stepToShow = document.querySelector(`.quiz-step[data-step="${stepNumber}"]`);
+        if (stepToShow) {
+          stepToShow.classList.add('active');
+        }
+      }
+      
+      // Обработчики для кнопок "Далее"
+      nextButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Проверка валидности формы на текущем шаге
+          const currentStepForm = this.closest('.quiz-step').querySelector('form');
+          if (currentStepForm && !currentStepForm.checkValidity()) {
+            currentStepForm.reportValidity();
+            return;
+          }
+          
+          if (currentStep < steps.length) {
+            currentStep++;
+            showStep(currentStep);
+          }
+        });
+      });
+      
+      // Обработчики для кнопок "Назад"
+      prevButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
