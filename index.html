@@ -6,8 +6,112 @@
   <title>Квиз по аренде экрана</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="./style.css">
+  <style>
+    input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #999999;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 12px;
+      transition: border-color 0.2s ease;
+      background-color: white;
+    }
+    input[type="radio"]:checked {
+      border-color: #3b9cd6;
+      background-color: #3b9cd6;
+    }
+    input[type="radio"]:checked::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
+    input[type="radio"]:focus-visible {
+      outline: 2px solid #3b9cd6;
+      outline-offset: 2px;
+    }
+    
+    /* Стили для чекбокса */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 20px;
+      height: 18px;
+      border: 1.5px solid #999999;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 12px;
+      transition: border-color 0.2s ease;
+      background-color: white;
+    }
+    input[type="checkbox"]:checked {
+      border-color: gray;
+      background-color: white;
+    }
+    input[type="checkbox"]:checked::after {
+      content: "✓";
+      position: absolute;
+      top: -2px;
+      left: 3px;
+      color: gray;
+      font-size: 13px;
+    }
+    
+    /* Анимация модального окна */
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    .modal-content {
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal-open .modal-content {
+      transform: scale(1);
+    }
+    
+    /* Скрытие шагов */
+    .quiz-step {
+      display: none;
+    }
+    .quiz-step.active {
+      display: block;
+    }
 
+    /* Стиль для поля ввода рядом с "Другое" */
+    .other-input {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 4px 12px;
+      border: 1px solid #ccc;
+      border-radius: 16px;
+      background: white;
+      width: 180px;
+    }
+
+    /* Стиль для поля ввода дней */
+    .days-input {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 4px 12px;
+      border: 1px solid #ccc;
+      border-radius: 16px;
+      background: white;
+      width: 100px;
+    }
+  </style>
 </head>
 <body class="bg-[#f5f5f5] min-h-screen flex items-center justify-center p-4">
   <!-- Кнопка открытия квиза -->
@@ -43,7 +147,6 @@
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -67,17 +170,15 @@
                 <span>На мероприятии</span>
               </label>
               <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
-                <input type="radio" name="usage-location" value="other" />
+                <input type="radio" name="usage-location" value="other" id="other-option" />
                 <span>Другое</span>
+                <input type="text" class="other-input" id="other-input" placeholder="Укажите что">
               </label>
             </div>
           </fieldset>
 
-          <!-- Кнопки -->
-          <div class="flex justify-center space-x-6">
-            <button type="button" class="bg-gray-300 text-gray-700 text-sm font-normal rounded-full px-8 py-2.5 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 opacity-0 cursor-default">
-              <i class="fas fa-arrow-left mr-2"></i> Назад
-            </button>
+          <!-- Кнопки - только Далее по центру -->
+          <div class="flex justify-center">
             <button type="button" class="next-btn bg-[#f99344] text-white text-sm font-normal rounded-full px-10 py-2.5 hover:bg-[#e07e2a] focus:outline-none focus:ring-2 focus:ring-[#f99344]">
               Далее
             </button>
@@ -105,7 +206,6 @@
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -171,7 +271,6 @@
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -229,7 +328,6 @@
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -287,7 +385,6 @@
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -303,8 +400,9 @@
                 <span>Один день</span>
               </label>
               <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
-                <input type="radio" name="rental-period" value="few-days" />
+                <input type="radio" name="rental-period" value="few-days" id="few-days-option" />
                 <span>Несколько дней</span>
+                <input type="number" min="2" class="days-input" id="days-input" placeholder="Сколько">
               </label>
               <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer">
                 <input type="radio" name="rental-period" value="long-term" />
@@ -345,7 +443,6 @@
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -403,7 +500,6 @@
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
           <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full border border-gray-300 text-gray-600 text-sm font-normal flex items-center justify-center">8</div>
         </div>
 
         <!-- Вопрос -->
@@ -415,13 +511,13 @@
 
             <div class="flex flex-col space-y-4 max-w-xs mx-auto">
               <div class="w-full">
-                <input type="text" name="name" placeholder="Имя" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]" required />
+                <input type="text" name="name" placeholder="Имя" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]" />
               </div>
               <div class="w-full">
                 <input type="tel" name="phone" placeholder="Телефон" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b9cd6]" required />
               </div>
               <label class="inline-flex items-center text-gray-900 text-sm cursor-pointer mt-4">
-                <input type="checkbox" name="privacy-policy" required />
+                <input type="checkbox" name="privacy-policy" checked required />
                 <span>Я соглашаюсь на обработку персональных данных</span>
               </label>
             </div>
@@ -450,18 +546,6 @@
           </p>
         </div>
 
-        <!-- Индикаторы шагов -->
-        <div class="flex justify-center space-x-1 mb-10">
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">1</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">2</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">3</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">4</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">5</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">6</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">7</div>
-          <div class="w-8 h-8 rounded-full bg-[#3b9cd6] text-white text-sm font-normal flex items-center justify-center">8</div>
-        </div>
-
         <!-- Иконка успеха -->
         <div class="flex justify-center mb-12">
           <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
@@ -488,6 +572,11 @@
       const nextButtons = document.querySelectorAll('.next-btn');
       const prevButtons = document.querySelectorAll('.prev-btn');
       const steps = document.querySelectorAll('.quiz-step');
+      const otherOption = document.getElementById('other-option');
+      const otherInput = document.getElementById('other-input');
+      const fewDaysOption = document.getElementById('few-days-option');
+      const daysInput = document.getElementById('days-input');
+      
       let currentStep = 1;
       
       // Открытие модального окна
@@ -532,7 +621,7 @@
         }
       }
       
-      // Обработчики для кнопок "Далее"
+      // Обработчики для кнопки "Далее"
       nextButtons.forEach(button => {
         button.addEventListener('click', function() {
           // Проверка валидности формы на текущем шаге
@@ -549,7 +638,7 @@
         });
       });
       
-      // Обработчики для кнопок "Назад"
+      // Обработчики для кнопки "Назад"
       prevButtons.forEach(button => {
         button.addEventListener('click', function() {
           if (currentStep > 1) {
@@ -557,6 +646,24 @@
             showStep(currentStep);
           }
         });
+      });
+
+      // Показ поля ввода для "Другое"
+      otherOption.addEventListener('change', function() {
+        if (this.checked) {
+          otherInput.setAttribute('required', 'required');
+        } else {
+          otherInput.removeAttribute('required');
+        }
+      });
+
+      // Показ поля ввода для "Несколько дней"
+      fewDaysOption.addEventListener('change', function() {
+        if (this.checked) {
+          daysInput.setAttribute('required', 'required');
+        } else {
+          daysInput.removeAttribute('required');
+        }
       });
     });
   </script>
